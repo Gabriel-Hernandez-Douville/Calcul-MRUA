@@ -39,9 +39,9 @@ void instructions();
 void fill_struct(struct donnees* data);
 
 int main(void) {
-	struct donnees data = { nan("") };
-
+	struct donnees data;
 	fill_struct(&data);
+
 	instructions();
 	inserer_donnees(&data);
 
