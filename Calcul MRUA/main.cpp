@@ -4,14 +4,8 @@
 #include <stdlib.h>
 #include <math.h>
 
-
-// Defines
-
 #define G -9.81
 #define NB_DONNEES sizeof(struct donnees)/sizeof(double)
-
-
-
 
 struct vitesse2D {
 	double x;
@@ -38,24 +32,13 @@ struct donnees {
 
 	double temps_i;
 	double temps_f;
-
-
 };
 
-
-// Prototypes
 void inserer_donnees(struct donnees*);
 void instructions();
 void fill_struct(struct donnees* data);
 
-
-// main
 int main(void) {
-
-	// Variables du probleme
-
-	// Pointeurs des variables
-
 	struct donnees data = { nan("") };
 
 	fill_struct(&data);
@@ -65,29 +48,26 @@ int main(void) {
 	return 0;
 }
 
-// Fonctions develloppees
-
 void inserer_donnees(struct donnees* data) {
 	double* tableau_donnees = (double*)data;
 
 	while (true) {
 		int index = 0;
 		scanf("%d", &index);
+
 		if (index < 0 || index >= NB_DONNEES)
 			break;
+
 		scanf("%lf", &tableau_donnees[index]);
 	}
-
-
-
 }
 
 void fill_struct(struct donnees* data) {
 	double* tableau_donnees = (double*)data;
+
 	for (int i = 0; i < NB_DONNEES; i++) {
 		tableau_donnees[i] = nan("");
 	}
-
 }
 
 void instructions() {
