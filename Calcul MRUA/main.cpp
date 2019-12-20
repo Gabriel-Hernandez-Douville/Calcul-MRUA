@@ -37,6 +37,7 @@ struct donnees {
 void inserer_donnees(struct donnees*);
 void instructions();
 void fill_struct(struct donnees* data);
+void calcul_1(struct donnees*);
 
 int main(void) {
 	struct donnees data;
@@ -47,6 +48,7 @@ int main(void) {
 
 	return 0;
 }
+
 
 void inserer_donnees(struct donnees* data) {
 	double* tableau_donnees = (double*)data;
@@ -91,3 +93,56 @@ void instructions() {
 		"temps final, faites le 15.\n"
 		"Pour quitter le menu, faites le 20.\n\n");
 }
+
+bool variable_presente(double valeur) {
+	return !isnan(valeur);
+}
+
+void calcul_1(struct donnees* data) {
+	if (variable_presente(data->vitesse_i.norme)) {
+		data->vitesse_i.x = data->vitesse_i.x * cos(data->angle_i);
+		data->vitesse_i.y = data->vitesse_i.y * sin(data->angle_i);
+	}
+	else if (variable_presente(data->vitesse_i.x)) {
+		data->vitesse_i.norme = data->vitesse_i.x / cos(data->angle_i);
+		data->vitesse_i.y = data->vitesse_i.norme * sin(data->angle_i);
+	}
+	else if (variable_presente(data->vitesse_i.y)) {
+		data->vitesse_i.norme = data->vitesse_i.x / sin(data->angle_i);
+		data->vitesse_i.x = data->vitesse_i.norme * cos(data->angle_i);
+	}
+
+	if (variable_presente(data->vitesse_f.norme)) {
+		data->vitesse_f.x = data->vitesse_f.x * cos(data->angle_f);
+		data->vitesse_f.y = data->vitesse_f.y * sin(data->angle_f);
+	}
+	else if (variable_presente(data->vitesse_f.x)) {
+		data->vitesse_f.norme = data->vitesse_f.x / cos(data->angle_f);
+		data->vitesse_f.y = data->vitesse_f.norme * sin(data->angle_f);
+	}
+	else if (variable_presente(data->vitesse_f.y)) {
+		data->vitesse_f.norme = data->vitesse_f.x / sin(data->angle_f);
+		data->vitesse_f.x = data->vitesse_f.norme * cos(data->angle_f);
+	}
+	
+	(if a) -
+		(if t) -
+			(if yf) -
+				(if yi) - [viy]
+				(if viy) - [yi]
+			(if yi)
+				(if yf) - [viy]
+				(if viy) - [yf]
+			(if viy)
+				(if yf)	- [yi]
+				(if yi) - [yf]
+		(if yf)
+		(if yi)
+		(if viy)
+					
+		a=b*c*d
+
+
+
+}
+
