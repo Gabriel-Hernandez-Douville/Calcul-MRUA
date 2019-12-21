@@ -38,20 +38,47 @@ void inserer_donnees(struct donnees*);
 void instructions();
 void fill_struct(struct donnees* data);
 void calcul_1(struct donnees*);
+double calcul_pi();
 
 int main(void) {
+	double pi = calcul_pi();
 	struct donnees data;
 	fill_struct(&data);
-	double y;
 	instructions();
 
 	inserer_donnees(&data);
 	calcul_1(&data);
-	double x = 30 * cos(50);
-	y = 30 * sin(50);
+
+
+
+	double angle = 50;
+	double angle_rad;
+
+	angle_rad = angle * pi / 180;
+
+	double x = (10 * cos(0.87));
+	double y = (10 * sin(0.87));
+	double z = 5;
+
+
+
 	return 0;
 }
 
+double calcul_pi() {
+	double k = 0;
+	double pi = 0;
+	double value;
+	double exp;
+
+	while (k < 1000) {
+		exp = pow(-3, -k);
+		value = exp * sqrt(12) / (2 * k + 1);
+		k++;
+		pi = pi + value;
+	}
+	return pi;
+}
 
 void inserer_donnees(struct donnees* data) {
 	double* tableau_donnees = (double*)data;
@@ -62,16 +89,42 @@ void inserer_donnees(struct donnees* data) {
 
 		if (index < 0 || index >= NB_DONNEES)
 			break;
+		switch (index) {
+		case '0': printf("Vitesse initiale x = ");
+			break;
+		case '1': printf("Vitesse initiale y = ");
+			break;
+		case '2': printf("Vitesse initiale norme = ");
+			break;
+		case '3': printf("Vitesse finale x = ");
+			break;
+		case '4': printf("Vitesse finale y = ");
+			break;
+		case '5': printf("Vitesse finale norme = ");
+			break;
+		case '6': printf("Position initiale x = ");
+			break;
+		case '7': printf("Position initiale y = ");
+			break;
+		case '8': printf("Position finale x = ");
+			break;
+		case '9': printf("Position finale y = ");
+			break;
+		case '10': printf("Acceleration x = ");
+			break;
+		case '11': printf("Acceleration y = ");
+			break;
+		case '12': printf("Angle intial en degres = ");
+			break;
+		case '13': printf("Angle final en degres = ");
+			break;
+		case '14': printf("Temps initial (temps de debut - surement 0) = ");
+			break;
+		case '15': printf("Temps final = ");
+			break;
+		}
 
 		scanf("%lf", &tableau_donnees[index]);
-	}
-}
-
-void fill_struct(struct donnees* data) {
-	double* tableau_donnees = (double*)data;
-
-	for (int i = 0; i < NB_DONNEES; i++) {
-		tableau_donnees[i] = nan("");
 	}
 }
 
@@ -97,12 +150,25 @@ void instructions() {
 		"Pour quitter le menu, faites le 20.\n\n");
 }
 
+void fill_struct(struct donnees* data) {
+	double* tableau_donnees = (double*)data;
+
+	for (int i = 0; i < NB_DONNEES; i++) {
+		tableau_donnees[i] = nan("");
+	}
+}
+
+
 bool variable_presente(double valeur) {
 	return !isnan(valeur);
 }
 
 void calcul_1(struct donnees* data) {
 	//vitesse initiale et composantes
+	if (variable_presente(data->angle_i)) {
+		data->angle_i = data->angle_i * calcul_pi() / 180;
+	}
+
 	if (variable_presente(data->vitesse_i.norme)) {
 		data->vitesse_i.x = data->vitesse_i.norme * cos(data->angle_i);
 		data->vitesse_i.y = data->vitesse_i.norme * sin(data->angle_i);
