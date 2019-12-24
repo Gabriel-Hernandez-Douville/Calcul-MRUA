@@ -83,50 +83,18 @@ double calcul_pi() {
 void inserer_donnees(struct donnees* data) {
 	double* tableau_donnees = (double*)data;
 
-	while (true) {
-		int index = 0;
-		scanf("%d", &index);
+	int index = 0;
+	scanf("%d", &index);
 
-		if (index < 0 || index >= NB_DONNEES)
-			break;
-		switch (index) {
-		case '0': printf("Vitesse initiale x = ");
-			break;
-		case '1': printf("Vitesse initiale y = ");
-			break;
-		case '2': printf("Vitesse initiale norme = ");
-			break;
-		case '3': printf("Vitesse finale x = ");
-			break;
-		case '4': printf("Vitesse finale y = ");
-			break;
-		case '5': printf("Vitesse finale norme = ");
-			break;
-		case '6': printf("Position initiale x = ");
-			break;
-		case '7': printf("Position initiale y = ");
-			break;
-		case '8': printf("Position finale x = ");
-			break;
-		case '9': printf("Position finale y = ");
-			break;
-		case '10': printf("Acceleration x = ");
-			break;
-		case '11': printf("Acceleration y = ");
-			break;
-		case '12': printf("Angle intial en degres = ");
-			break;
-		case '13': printf("Angle final en degres = ");
-			break;
-		case '14': printf("Temps initial (temps de debut - surement 0) = ");
-			break;
-		case '15': printf("Temps final = ");
-			break;
-		}
-
+	for (; index = 20;) {
+		printf("\nValeur pour la %d donnée: ");
 		scanf("%lf", &tableau_donnees[index]);
+		scanf("%d", &index);
 	}
+
 }
+
+
 
 void instructions() {
 	printf("Veuillez saisir les donnees:\n"
@@ -194,7 +162,7 @@ void calcul_1(struct donnees* data) {
 				}
 
 				else if (variable_presente(data->vitesse_i.y)) {
-					data->position_f.y = (data->acceleration.y / 2) * data->temps_f * data->temps_f + data->vitesse_i.y * data->temps_f;
+					data->position_f.y = (data->acceleration.y / 2) * pow(data->temps_f, 2) + data->vitesse_i.y * data->temps_f;
 				}
 			}
 
@@ -209,7 +177,7 @@ void calcul_1(struct donnees* data) {
 	}
 
 	else if (variable_presente(data->position_i.y) && variable_presente(data->position_f.y) && variable_presente(data->vitesse_i.y) && variable_presente(data->temps_f)) {
-		data->acceleration.y = 2 * (data->position_f.y - data->position_i.y - data->vitesse_i.y * data->temps_f) / (data->temps_f * data->temps_f);
+		data->acceleration.y = 2 * (data->position_f.y - data->position_i.y - data->vitesse_i.y * data->temps_f) / pow(data->temps_f, 2);
 	}
 
 	// Vitesse finale et composantes
@@ -226,6 +194,20 @@ void calcul_1(struct donnees* data) {
 		data->vitesse_f.x = data->vitesse_f.norme * cos(data->angle_f);
 	}
 
+	// Vf2-Vi2=2a(yf-yi)
+	if (variable_presente(data->acceleration.y)) {
+
+		if (variable_presente(data->vitesse_f.y)) {
+
+			if (variable_presente(data->vitesse_i.y)) {
+
+				if (variable_presente(data->position_f.y)) {
+
+					data->position_i.y = data->position_f.y - (pow(data->vitesse_f.y, 2) + pow(data->vitesse_i.y, 2)) / (2 * data->acceleration.y);
+				}
+			}
+		}
+	}
 
 }
 /*
