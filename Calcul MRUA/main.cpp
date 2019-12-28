@@ -79,25 +79,17 @@ double calcul_pi() {
 	return pi;
 }
 
-void inserer_donnees(struct donnees* data) {
+void fill_struct(struct donnees* data) {
 	double* tableau_donnees = (double*)data;
 
-	int index = 0;
-	scanf("%d", &index);
-	printf("\nValeur pour la %d donnee: ", index);
-
-	for (; index = 20;) {
-		scanf("%lf", &tableau_donnees[index]);
-		scanf("%d", &index);
-		printf("\nValeur pour la %d donnee: ", index);
+	for (int i = 0; i < NB_DONNEES; i++) {
+		tableau_donnees[i] = nan("");
 	}
-
 }
 
-
 void instructions() {
-	printf("Veuillez saisir les donnees:\n"
-		"Pour saisir:\n"
+	printf("Voici le menu de donnees:\n"
+		"Veuillez entrer votre selection:\n"
 		"Composante en x de la vitesse initiale, faites le 0.\n"
 		"Composante en y de la vitesse initiale, faites le 1.\n"
 		"Norme de la vitesse initiale, faites le 2.\n"
@@ -117,17 +109,30 @@ void instructions() {
 		"Pour quitter le menu, faites le 20.\n\n");
 }
 
-void fill_struct(struct donnees* data) {
+void inserer_donnees(struct donnees* data) {
 	double* tableau_donnees = (double*)data;
 
-	for (int i = 0; i < NB_DONNEES; i++) {
-		tableau_donnees[i] = nan("");
+	int index = 0;
+	scanf("%d", &index);
+	printf("\nValeur pour la %d donnee: ", index);
+
+	for (; index = 20;) {
+		scanf("%lf", &tableau_donnees[index]);
+		scanf("%d", &index);
+		printf("\nValeur pour la %d donnee: ", index);
 	}
+
 }
 
 
 bool variable_presente(double valeur) {
 	return !isnan(valeur);
+}
+
+void acceleration_par_defaut_y(struct donnees* data) {
+	if (variable_presente(data->acceleration.y) == false) {
+		data->acceleration.y = -9.8;
+	}
 }
 
 void calcul_angle_initial(struct donnees* data) {
@@ -143,7 +148,7 @@ void calcul_angle_final(struct donnees* data) {
 }
 
 
-void calcul_vitesse_initiale(struct donnees* data){
+void calcul_vitesse_initiale(struct donnees* data) {
 	if (variable_presente(data->vitesse_i.norme)) {
 		data->vitesse_i.x = data->vitesse_i.norme * cos(data->angle_i);
 		data->vitesse_i.y = data->vitesse_i.norme * sin(data->angle_i);
@@ -196,7 +201,8 @@ void calcul_formule_temps_carre(struct donnees* data) {
 		}
 
 		else if (variable_presente(data->position_i.y) && variable_presente(data->position_f.y) && variable_presente(data->vitesse_i.y)) {
-			data->temps_f;
+			double a, b, c;
+			a = (data->acceleration.y) / 2
 		}
 	}
 
@@ -206,8 +212,8 @@ void calcul_formule_temps_carre(struct donnees* data) {
 }
 
 
-	// Vf2-Vi2=2a(yf-yi)
-void calcul_formule_vitesses_carrees(struct donnees* data){
+// Vf2-Vi2=2a(yf-yi)
+void calcul_formule_vitesses_carrees(struct donnees* data) {
 	if (variable_presente(data->acceleration.y)) {
 
 		if (variable_presente(data->vitesse_f.y)) {
@@ -219,7 +225,7 @@ void calcul_formule_vitesses_carrees(struct donnees* data){
 					data->position_i.y = data->position_f.y - (pow(data->vitesse_f.y, 2) + pow(data->vitesse_i.y, 2)) / (2 * data->acceleration.y);
 				}
 			}
-		}	
+		}
 	}
 }
 
