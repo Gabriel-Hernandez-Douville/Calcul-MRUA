@@ -37,6 +37,7 @@ struct donnees {
 void inserer_donnees(struct donnees*);
 void instructions();
 void fill_struct(struct donnees* data);
+void acceleration_par_defaut_y(struct donnees* data);
 void calcul_angle_initial(struct donnees*);
 void calcul_vitesse_initiale(struct donnees* data);
 void calcul_angle_final(struct donnees* data);
@@ -44,6 +45,8 @@ void calcul_vitesse_finale(struct donnees* data);
 void calcul_formule_temps_carre(struct donnees* data);
 void calcul_formule_vitesses_carrees(struct donnees* data);
 void calcul_formule_vitesse_acceleration(struct donnees* data);
+void solve_quadratic(struct donnees* data);
+
 
 double calcul_pi();
 
@@ -180,6 +183,7 @@ void calcul_vitesse_finale(struct donnees* data) {
 
 
 void calcul_formule_temps_carre(struct donnees* data) {
+	struct donnees data;
 	if (variable_presente(data->acceleration.y)) {
 
 		if (variable_presente(data->temps_i)) {
@@ -201,8 +205,7 @@ void calcul_formule_temps_carre(struct donnees* data) {
 		}
 
 		else if (variable_presente(data->position_i.y) && variable_presente(data->position_f.y) && variable_presente(data->vitesse_i.y)) {
-			double a, b, c;
-			a = (data->acceleration.y) / 2
+			solve_quadratic(data);
 		}
 	}
 
@@ -232,3 +235,18 @@ void calcul_formule_vitesses_carrees(struct donnees* data) {
 void calcul_formule_vitesse_acceleration(struct donnees* data) {
 
 }
+
+void solve_quadratic(struct donnees* data) {
+	double a, b, c;
+	a = (data->acceleration.y) / 2;
+	b = data->vitesse_i.y;
+	c = data->position_i.y - data->position_f.y;
+
+	if (data->acceleration.y < 0) {
+		data->temps_f = ((0 - b) - (sqrt(pow(b, 2) - (4 * a * c)))) / 2 * a;
+	}
+	else if (data->acceleration.y > 0) {
+		data->temps_f = ((0 - b) + (sqrt(pow(b, 2) - (4 * a * c)))) / 2 * a;
+	}
+}
+
