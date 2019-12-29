@@ -327,8 +327,29 @@ void conversion_vitesse_x(struct donnees* data) {
 }
 // done
 
+void calcul_angle_initial(struct donnees* data) {
+	if (variable_presente(data->vitesse_i.x) && variable_presente(data->vitesse_i.y)) {
+		data->angle_i = (atan(data->vitesse_i.y / data->vitesse_i.x));
+	}
+	else if (variable_presente(data->vitesse_i.norme) && variable_presente(data->vitesse_i.y)) {
+		data->angle_i = (asin(data->vitesse_i.y / data->vitesse_i.norme));
+	}
+	else if (variable_presente(data->vitesse_i.x) && variable_presente(data->vitesse_i.norme)) {
+		data->angle_i = (acos(data->vitesse_i.x / data->vitesse_i.norme));
+	}
+}
+// done
+
 void calcul_angle_final(struct donnees* data) {
 	if (variable_presente(data->vitesse_f.x) && variable_presente(data->vitesse_f.y)) {
 		data->angle_f = (atan(data->vitesse_f.y / data->vitesse_f.x));
 	}
+	else if (variable_presente(data->vitesse_f.norme) && variable_presente(data->vitesse_f.y)) {
+		data->angle_f = (asin(data->vitesse_f.y / data->vitesse_f.norme));
+	}
+	else if (variable_presente(data->vitesse_f.x) && variable_presente(data->vitesse_f.norme)) {
+		data->angle_f = (acos(data->vitesse_f.x / data->vitesse_f.norme));
+	}
 }
+// done
+
