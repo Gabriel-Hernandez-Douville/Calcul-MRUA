@@ -46,6 +46,8 @@ void calcul_formule_temps_carre(struct donnees* data);
 void calcul_formule_vitesses_carrees(struct donnees* data);
 void calcul_formule_vitesse_acceleration(struct donnees* data);
 void solve_quadratic(struct donnees* data);
+void conversion_vitesse_x(struct donnees* data);
+
 
 double calcul_pi();
 
@@ -120,15 +122,15 @@ void instructions() {
 void inserer_donnees(struct donnees* data) {
 	double* tableau_donnees = (double*)data;
 
-	char tableau_menu[19][50] = { "Vitesse initiale x = ", "Vitesse initiale y = ", "Vitesse initiale = ", "Vitesse finale x = " "Vitesse finale y = ", "Vitesse finale = ", 
-		"Position initiale x = ", "Position initiale y = ", "Position finale x = ", "Position finale y = ", "Acceleration x = ", "Acceleration y = ", "Angle initial = ", 
-		"Angle final = ", "Temps initial = ", "Temps final = "};
+	char tableau_menu[19][50] = { "Vitesse initiale x = ", "Vitesse initiale y = ", "Vitesse initiale = ", "Vitesse finale x = " "Vitesse finale y = ", "Vitesse finale = ",
+		"Position initiale x = ", "Position initiale y = ", "Position finale x = ", "Position finale y = ", "Acceleration x = ", "Acceleration y = ", "Angle initial = ",
+		"Angle final = ", "Temps initial = ", "Temps final = " };
 
 	int index;
 	printf("\nEntrez votre selection: ");
 	scanf("%d", &index);
 
-	while (index!=20) {
+	while (index != 20) {
 		printf("%s", tableau_menu[index]);
 		scanf("%lf", &tableau_donnees[index]);
 		printf("\nEntrez votre selection: ");
@@ -313,4 +315,11 @@ void solve_quadratic(struct donnees* data) {
 }
 // done
 
-void conversion
+void conversion_vitesse_x(struct donnees* data) {
+	if ((variable_presente(data->vitesse_f.x) == false) && (variable_presente(data->vitesse_i.x))) {
+		data->vitesse_f.x = data->vitesse_i.x;
+	}
+	if ((variable_presente(data->vitesse_i.x) == false) && (variable_presente(data->vitesse_f.x))) {
+		data->vitesse_i.x = data->vitesse_f.x;
+	}
+}
