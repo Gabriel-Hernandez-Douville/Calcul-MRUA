@@ -47,6 +47,8 @@ void calcul_formule_vitesses_carrees(struct donnees* data);
 void calcul_formule_vitesse_acceleration(struct donnees* data);
 void solve_quadratic(struct donnees* data);
 void conversion_vitesse_x(struct donnees* data);
+void calcul_angle_final(struct donnees* data);
+
 
 
 double calcul_pi();
@@ -321,5 +323,12 @@ void conversion_vitesse_x(struct donnees* data) {
 	}
 	if ((variable_presente(data->vitesse_i.x) == false) && (variable_presente(data->vitesse_f.x))) {
 		data->vitesse_i.x = data->vitesse_f.x;
+	}
+}
+// done
+
+void calcul_angle_final(struct donnees* data) {
+	if (variable_presente(data->vitesse_f.x) && variable_presente(data->vitesse_f.y)) {
+		data->angle_f = (atan(data->vitesse_f.y / data->vitesse_f.x));
 	}
 }
